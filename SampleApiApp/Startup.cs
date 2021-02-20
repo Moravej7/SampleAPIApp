@@ -29,10 +29,7 @@ namespace SampleApiApp
             services.AddControllers();
 
             services.AddControllers();
-            services.AddDbContext<ApplicationDbContext>(options =>
-            {
-                options.UseSqlServer(Configuration.GetConnectionString("SqlServer"));
-            });
+            services.AddDBContext<AddSqlServer>(Configuration.GetConnectionString("SqlServer"));
 
             services.AddCors(options =>
             {

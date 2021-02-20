@@ -158,5 +158,11 @@ namespace WebFramework.Configuration
             .AddDataAnnotations()
             .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
         }
+
+        public static void AddDBContext<T>(this IServiceCollection services, string connectionString) where T : IConfigDatabase, new()
+        {
+            T t = new T();
+            t.AddCustomDb(services, connectionString);
+        }
     }
 }
