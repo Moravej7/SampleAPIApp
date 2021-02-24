@@ -8,7 +8,10 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Services;
 using WebFramework.Configuration;
+using AutoMapper;
+using Serilog;
 
 namespace SampleApiApp
 {
@@ -27,8 +30,6 @@ namespace SampleApiApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
-
-            services.AddControllers();
             services.AddDBContext<AddSqlServer>(Configuration.GetConnectionString("SqlServer"));
 
             services.AddCors(options =>
@@ -42,11 +43,14 @@ namespace SampleApiApp
                     });
             }
             );
+            AddAutomepper(services);
             services.AddSwaggerGen();
             services.AddMinimalMvc();
-            services.AddCustomApiVersioning();
+            //services.AddCustomApiVersioning();
             services.AddCustomIdentity();
             services.AddJwtAuthentication(_siteSettings.JwtSettings);
+            services.AddApplicationServices();
+            services.AddConfig<SiteSettings>(Configuration,"SiteSettings");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -61,7 +65,7 @@ namespace SampleApiApp
 
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "V1 Docs");
             });
 
             using (var scope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())
@@ -76,6 +80,8 @@ namespace SampleApiApp
 
             app.UseHttpsRedirection();
 
+            app.UseSerilogRequestLogging();
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -84,6 +90,19 @@ namespace SampleApiApp
             {
                 endpoints.MapControllers();
             });
+        }
+
+
+        
+        private void AddAutomepper(IServiceCollection services)
+        {
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new DtoMappingProfile());
+                mc.AddProfile(new ModelsAutoMapperProfile());
+            });
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
         }
     }
 }

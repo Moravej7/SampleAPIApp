@@ -15,11 +15,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using WebFramework;
 using WebFramework.Api;
-using WebFramework.Filters;
 
 namespace SampleApiApp.Controllers
 {
-    [ApiVersion("1")]
     public class UserController : BaseAPIController
     {
         private readonly IUserService _userService;
@@ -66,7 +64,7 @@ namespace SampleApiApp.Controllers
 
         [HttpPost("[action]")]
         [AllowAnonymous]
-        public async Task<ActionResult> Token([FromForm]LoginDto loginDto, CancellationToken cancellationToken)
+        public async Task<ActionResult> Token([FromForm] LoginDto loginDto, CancellationToken cancellationToken)
         {
             if (!loginDto.grant_type.Equals("password", StringComparison.OrdinalIgnoreCase))
                 throw new Exception("OAuth flow is not password.");

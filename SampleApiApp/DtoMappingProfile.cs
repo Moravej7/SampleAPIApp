@@ -1,16 +1,15 @@
 ﻿using AutoMapper;
+using Entities;
 using Entities.User;
 using Factor.DataTransferObjects;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SampleApiApp.DataTransferObjects;
+using Services.Models;
 
 namespace SampleApiApp
 {
-    public class MappingProfiles : Profile
+    public class DtoMappingProfile : Profile
     {
-        public MappingProfiles()
+        public DtoMappingProfile()
         {
             CreateMap<User, UserDto>();
             CreateMap<UserDto, User>();
@@ -21,6 +20,8 @@ namespace SampleApiApp
             CreateMap<EditUserDto, User>();
             CreateMap<User, EditUserDto>();
 
+            CreateMap<CreateCompanyDto, CreateCompanyModel>();
+            CreateMap<GetCompanyModel, GetCompanyDto>();
         }
     }
 }

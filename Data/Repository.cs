@@ -7,12 +7,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
-namespace Data.Repositories
+namespace Data
 {
     public class Repository<TEntity> : IRepository<TEntity>
         where TEntity : class, IEntity
     {
-        protected readonly ApplicationDbContext AppDbContext;
+        private readonly ApplicationDbContext AppDbContext;
         private DbSet<TEntity> Entities { get; }
         private IQueryable<TEntity> Table => Entities;
         private IQueryable<TEntity> TableNoTracking => Entities.AsNoTracking();

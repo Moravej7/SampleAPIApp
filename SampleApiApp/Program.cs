@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Common;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -16,7 +18,6 @@ namespace SampleApiApp
         {
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Override("Microsoft", Serilog.Events.LogEventLevel.Information)
-                .MinimumLevel.Override("Console", Serilog.Events.LogEventLevel.Information)
                 .Enrich.FromLogContext()
                 .WriteTo.Console()
                 .CreateLogger();
@@ -42,6 +43,13 @@ namespace SampleApiApp
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
+                    webBuilder.UseKestrel((context, options) =>
+                    {
+                        KestrelConfigs kestrelConfigs = new KestrelConfigs();
+                        context.Configuration.Bind("KestrelConfigs", kestrelConfigs);
+                        options.Listen(IPAddress.Parse(kestrelConfigs.Host), kestrelConfigs.Port);
+                        options.Limits.MaxRequestBodySize = null;
+                    });
                 });
     }
 }
