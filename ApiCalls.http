@@ -1,0 +1,21 @@
+
+@V1Url = http://127.0.0.1:4040/api/
+
+@AdminToken = eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIn0.AMU0PCcF1pTV-1a05r48fRmiWyfL2UtkXCQIvtu_uWnsBXJozSirkw.ehWLpuWpwKWVsNK6WZUjog.m5RThRpx_6KxqH8b0l9OsQqWYTjBdJhYwOCdi1SqrI3aUl9ajgZF9eXGxmjHrm8hV8MPaGdN7Gl4inAEUwr2wyTWG1UaZo6ojDKJzvA4NLISFbxRXJn6D5Ci8G65QNCTEzZnjJTMNB6kANvpL_nk9yLIcFgdPSG09t6OfyUbpHXwjQZf1aAHokMxL0zsnPv-YY97HbITI9RF3S4bILm_o3Ztogw_MyBMxG74NRDoRgM519WROhcw8gydGtrH1U3Gmj2PMEub20JTe_tkzKbMTJayG5jc68nj9OqyoQgeZtze-0RxaYDTOZPZI9FUuG_WzbryQ7QPYjHvjVPM0eTYyfhWl06MlWtAnFnKYUqOVUb6VmTHfu5zQDMksYsXSpApLrIFGWMGy0uJkLpbQNv9ZsLLlQ9pMsay4r2TKC47_Va3d0eiFxGGBeEmo89hAAWU2iI0x_PF9o7p21V7blZ5ZpoMVtdlTd6XhZJfdVlLON4.TLzg7RLy5OrRJoG0ZTLbNQ
+###
+
+//token admin
+Post {{V1Url}}user/token
+content-type: application/x-www-form-urlencoded
+
+Username=admin
+&password=password
+&grant_type=password
+
+
+
+
+###
+GET {{V1Url}}Company
+content-type: application/json
+Authorization: Bearer {{AdminToken}}

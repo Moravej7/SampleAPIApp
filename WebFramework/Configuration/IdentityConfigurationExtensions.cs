@@ -2,29 +2,30 @@
 using Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using Common;
 
 namespace WebFramework.Configuration
 {
     public static class IdentityConfigurationExtensions
     {
         // we can get configs throw this method with an object
-        public static void AddCustomIdentity(this IServiceCollection services)
+        public static void AddCustomIdentity(this IServiceCollection services,IdentitySettings settings)
         {
             services.AddIdentity<User, Role>(identityOptions =>
             {
                 //Password Settings
-                //identityOptions.Password.RequireDigit = settings.PasswordRequireDigit;
-                //identityOptions.Password.RequiredLength = settings.PasswordRequiredLength;
-                //identityOptions.Password.RequireNonAlphanumeric = settings.PasswordRequireNonAlphanumic;
-                //identityOptions.Password.RequireUppercase = settings.PasswordRequireUppercase;
-                //identityOptions.Password.RequireLowercase = settings.PasswordRequireLowercase;
+                identityOptions.Password.RequireDigit = settings.PasswordRequireDigit;
+                identityOptions.Password.RequiredLength = settings.PasswordRequiredLength;
+                identityOptions.Password.RequireNonAlphanumeric = settings.PasswordRequireNonAlphanumic;
+                identityOptions.Password.RequireUppercase = settings.PasswordRequireUppercase;
+                identityOptions.Password.RequireLowercase = settings.PasswordRequireLowercase;
 
                 //UserName Settings
                 //identityOptions.User.RequireUniqueEmail = settings.RequireUniqueEmail;
 
                 //Singin Settings
-                //identityOptions.SignIn.RequireConfirmedEmail = false;
-                //identityOptions.SignIn.RequireConfirmedPhoneNumber = false;
+                identityOptions.SignIn.RequireConfirmedEmail = false;
+                identityOptions.SignIn.RequireConfirmedPhoneNumber = false;
 
                 //Lockout Settings
                 //identityOptions.Lockout.MaxFailedAccessAttempts = 5;

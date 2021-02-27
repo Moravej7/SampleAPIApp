@@ -27,7 +27,6 @@ namespace WebFramework.Configuration
             {
                 options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
             }).AddJwtBearer(options =>
             {
                 var secretkey = Encoding.UTF8.GetBytes(jwtSettings.SecretKey);
@@ -99,6 +98,7 @@ namespace WebFramework.Configuration
                     },
                     OnChallenge = context =>
                     {
+                        var a = context.Request.Headers;
                         if (context.AuthenticateFailure != null)
                             throw new AppException("Authenticate failure.", HttpStatusCode.Unauthorized, context.AuthenticateFailure, null);
                         throw new AppException("You are unauthorized to access this resource.", HttpStatusCode.Unauthorized);

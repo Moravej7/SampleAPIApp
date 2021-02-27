@@ -20,9 +20,9 @@ namespace Services
         private readonly SignInManager<User> signInManager;
         private readonly UserManager<User> _userManager;
 
-        public JwtService(IOptionsSnapshot<SiteSettings> settings, SignInManager<User> signInManager, UserManager<User> userManager)
+        public JwtService(SiteSettings settings, SignInManager<User> signInManager, UserManager<User> userManager)
         {
-            _siteSetting = settings.Value;
+            _siteSetting = settings;
             _userManager = userManager;
             this.signInManager = signInManager;
         }

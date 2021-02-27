@@ -6,7 +6,7 @@ namespace WebFramework
 {
     [ApiController]
     [ApiResultFilter]
-    [EnableCors]
+    //[EnableCors]
     [Route("api/[controller]")]
     public class BaseAPIController : ControllerBase
     {

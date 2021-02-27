@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SampleApiApp.DataTransferObjects;
 using Services.Interfaces;
@@ -9,6 +10,8 @@ using WebFramework;
 
 namespace SampleApiApp.Controllers
 {
+    [Authorize(Roles = "Admin")]
+    //[AllowAnonymous]
     public class CompanyController : BaseAPIController
     {
         private readonly ICompanyService _companyService;
